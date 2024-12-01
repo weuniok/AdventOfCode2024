@@ -19,5 +19,5 @@ fs.promises.readFile("./src/day1/input.txt", "utf-8").then((text) => {
     distance += Math.abs(leftValue - rightValue);
   });
 
-  console.log(distance);
+  console.log(`Difference score: ${distance}`);
 });
