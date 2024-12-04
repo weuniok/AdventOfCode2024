@@ -16,3 +16,13 @@ export const parseRowsAsNumbers = (text: string) => {
     .filter((line) => line !== undefined);
 };
 
+export const parseRowsAsStrings = (text: string) => {
+  return text
+    .split("\n")
+    .map((line) => {
+      line = line.replace(/#.*/, "").trim();
+      if (!line) return;
+      return line;
+    })
+    .filter((line) => line !== undefined);
+};
