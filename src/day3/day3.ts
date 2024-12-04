@@ -1,4 +1,4 @@
-import { readText } from "../utils/readFile";
+import { readText } from "../utils/fileUtils";
 
 export function cleanText(
   input: string,

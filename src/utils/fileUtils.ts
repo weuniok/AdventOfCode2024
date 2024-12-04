@@ -1,4 +1,11 @@
-export const parseInput = (text: string) => {
+import * as fs from "fs";
+
+export const readText = async (path: fs.PathLike) => {
+  const text = await fs.promises.readFile(path, "utf-8");
+  return text;
+};
+
+export const parseRowsAsNumbers = (text: string) => {
   return text
     .split("\n")
     .map((line) => {
@@ -8,3 +15,4 @@ export const parseInput = (text: string) => {
     })
     .filter((line) => line !== undefined);
 };
+
