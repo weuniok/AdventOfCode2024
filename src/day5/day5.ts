@@ -22,12 +22,12 @@ export const parseRulesAndUpdates = (text: string) => {
   return { rules, updates };
 };
 
-export const filterProperUpdates = (
+export const filterUpdates = (
   rules: Rules,
   updates: Update[],
   getCorrect: boolean = true
 ): Update[] => {
-  const properUpdates = updates.filter((update: Update) => {
+  const filteredUpdates = updates.filter((update: Update) => {
     const printedPages: { [pageNumber: number]: boolean } = {};
     const requiredPages: { [pageNumber: number]: boolean } = {};
     update
@@ -47,10 +47,10 @@ export const filterProperUpdates = (
         printedPages[Number(page)] !== undefined // but was already printed
       );
     });
-    return getCorrect && !isThereMissingPage;
+    return getCorrect ? !isThereMissingPage : isThereMissingPage;
   });
 
-  return properUpdates;
+  return filteredUpdates;
 };
 
 export const countPoints = (updates: Update[]): number => {
@@ -64,8 +64,45 @@ export const countPoints = (updates: Update[]): number => {
 
 export const performPart1Routine = (text: string) => {
   const { rules, updates } = parseRulesAndUpdates(text);
-  const properUpdates = filterProperUpdates(rules, updates);
+  const properUpdates = filterUpdates(rules, updates);
   const value = countPoints(properUpdates);
+
+  return value;
+};
+
+export const filterRelevantRules = (rules: Rules, update: Update): Rules => {
+  const updateRelevantRules: Rules = {};
+  Object.keys(rules).forEach((rulePage) => {
+    if (!update.includes(Number(rulePage))) return;
+
+    updateRelevantRules[Number(rulePage)] = rules[Number(rulePage)].filter(
+      (requiredPage) => update.includes(requiredPage)
+    );
+  });
+
+  return updateRelevantRules;
+};
+
+export const fixUpdates = (rules: Rules, updates: Update[]): Update[] => {
+  const fixedUpdates = updates.map((update) => {
+    const thisCaseRules: Rules = filterRelevantRules(rules, update);
+
+    const properUpdate = update.toSorted(
+      (a, b) =>
+        (thisCaseRules[a]?.length || 0) - (thisCaseRules[b]?.length || 0)
+    );
+    return properUpdate;
+  });
+
+  return fixedUpdates;
+};
+
+export const performPart2Routine = (text: string) => {
+  const { rules, updates } = parseRulesAndUpdates(text);
+  const improperUpdates = filterUpdates(rules, updates, false);
+
+  const fixedUpdates = fixUpdates(rules, improperUpdates);
+  const value = countPoints(fixedUpdates);
 
   return value;
 };
@@ -79,11 +116,11 @@ export function performPart1() {
 }
 
 export function performPart2() {
-  // readText("./src/day4/input.txt").then((text) => {
-  //   const parsedRows = parseRowsAsStrings(text);
-  //   const value = countCrossedMAS(parsedRows);
-  //   console.log(`Part 2 score: ${value}`);
-  // });
+  readText("./src/day5/input.txt").then((text) => {
+    const value = performPart2Routine(text);
+
+    console.log(`Part 2 score: ${value}`);
+  });
 }
 
 performPart1();
