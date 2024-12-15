@@ -1,7 +1,7 @@
 Advent of Code 2024
 <!-- AOC TILES BEGIN -->
 <h1 align="center">
-  2024 - 18 ⭐ - 
+  2024 - 20 ⭐ - 
 </h1>
 <a href="src/2024/day1/part1.ts">
   <img src=".aoc_tiles/tiles/2024/01.png" width="161px">
@@ -30,7 +30,7 @@ Advent of Code 2024
 <a href="None">
   <img src=".aoc_tiles/tiles/2024/09.png" width="161px">
 </a>
-<a href="None">
+<a href="src/2024/day10/doDayTen.m">
   <img src=".aoc_tiles/tiles/2024/10.png" width="161px">
 </a>
 <a href="src/2024/day11/blinkAtStones.m">
