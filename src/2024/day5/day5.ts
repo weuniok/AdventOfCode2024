@@ -1,4 +1,4 @@
-import { parseRowsAsStrings, readText } from "../utils/fileUtils";
+import { parseRowsAsStrings, readText } from "../../utils/fileUtils";
 
 type Rules = { [value: number]: number[] };
 type Update = number[];
@@ -108,7 +108,7 @@ export const performPart2Routine = (text: string) => {
 };
 
 export function performPart1() {
-  readText("./src/day5/input.txt").then((text) => {
+  readText("./src/2024/day5/input.txt").then((text) => {
     const value = performPart1Routine(text);
 
     console.log(`Part 1 score: ${value}`);
@@ -116,7 +116,7 @@ export function performPart1() {
 }
 
 export function performPart2() {
-  readText("./src/day5/input.txt").then((text) => {
+  readText("./src/2024/day5/input.txt").then((text) => {
     const value = performPart2Routine(text);
 
     console.log(`Part 2 score: ${value}`);

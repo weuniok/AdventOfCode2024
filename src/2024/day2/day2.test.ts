@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { countSafeReportsPart1 } from "./part1";
 import { countSafeReportsPart2 } from "./part2";
-import { parseRowsAsNumbers } from "../utils/fileUtils";
+import { parseRowsAsNumbers } from "../../utils/fileUtils";
 
 describe("Advent of Code 2024 Day 2", () => {
   const SIMPLE = `

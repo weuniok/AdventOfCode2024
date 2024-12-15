@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { parseRowsAsStrings } from "../utils/fileUtils";
+import { parseRowsAsStrings } from "../../utils/fileUtils";
 import { countCrossedMAS, countXMAS } from "./day4";
 
 describe("Advent of Code 2024 Day 4", () => {

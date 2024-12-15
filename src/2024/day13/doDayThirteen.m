@@ -1,4 +1,4 @@
-data_lines = readlines('input.txt');
+data_lines = readlines('src', '2024', 'day13', 'input.txt');
 
 total_cost_p1 = 0;
 total_cost_p2 = 0;
