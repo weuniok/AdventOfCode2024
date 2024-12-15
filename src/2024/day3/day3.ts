@@ -1,4 +1,4 @@
-import { readText } from "../utils/fileUtils";
+import { readText } from "../../utils/fileUtils";
 
 export function cleanText(
   input: string,
@@ -53,7 +53,7 @@ export function parseMultiplications(multiplications: string[]): number {
 }
 
 export function performPart1() {
-  readText("./src/day3/input.txt").then((text) => {
+  readText("./src/2024/day3/input.txt").then((text) => {
     const cleanedText = cleanText(text, false);
     const value = parseMultiplications(cleanedText);
     console.log(`Part 1 score: ${value}`);
@@ -61,7 +61,7 @@ export function performPart1() {
 }
 
 export function performPart2() {
-  readText("./src/day3/input.txt").then((text) => {
+  readText("./src/2024/day3/input.txt").then((text) => {
     const cleanedText = cleanText(text, true);
     const parsedCommands = disableCommands(cleanedText);
     const value = parseMultiplications(parsedCommands);

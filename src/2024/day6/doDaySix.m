@@ -1,4 +1,4 @@
-inputPath = fullfile('src', 'day6', 'input.txt');
+inputPath = fullfile('src', '2024', 'day6', 'input.txt');
 data_mat = analyzePatrols.readData(inputPath);
 
 visited_places = analyzePatrols.performPatrol(data_mat);

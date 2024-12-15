@@ -1,4 +1,4 @@
-import { parseRowsAsStrings, readText } from "../utils/fileUtils";
+import { parseRowsAsStrings, readText } from "../../utils/fileUtils";
 
 export const indexOfGlobal = (str: string, search: string) => {
   const indices = [];
@@ -141,7 +141,7 @@ export const countCrossedMAS = (rows: string[]) => {
 };
 
 export function performPart1() {
-  readText("./src/day4/input.txt").then((text) => {
+  readText("./src/2024/day4/input.txt").then((text) => {
     const parsedRows = parseRowsAsStrings(text);
     const value = countXMAS(parsedRows);
 
@@ -150,7 +150,7 @@ export function performPart1() {
 }
 
 export function performPart2() {
-  readText("./src/day4/input.txt").then((text) => {
+  readText("./src/2024/day4/input.txt").then((text) => {
     const parsedRows = parseRowsAsStrings(text);
     const value = countCrossedMAS(parsedRows);
 

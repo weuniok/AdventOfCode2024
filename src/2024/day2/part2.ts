@@ -1,4 +1,4 @@
-import { readText, parseRowsAsNumbers } from "../utils/fileUtils";
+import { readText, parseRowsAsNumbers } from "../../utils/fileUtils";
 
 export const countSafeReportsPart2 = (rows: number[][]): number => {
   const createCheckFunction = (
@@ -114,7 +114,7 @@ export const countSafeReportsPart2 = (rows: number[][]): number => {
   return safeRows;
 };
 
-readText("./src/day2/input.txt").then((text) => {
+readText("./src/2024/day2/input.txt").then((text) => {
   const rows = parseRowsAsNumbers(text);
   const safeRows = countSafeReportsPart2(rows);
   console.log(`Safe score: ${safeRows}`);

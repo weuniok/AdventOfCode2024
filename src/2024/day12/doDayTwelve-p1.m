@@ -1,4 +1,4 @@
-inputPath = fullfile('src', 'day12', 'input.txt');
+inputPath = fullfile('src', '2024', 'day12', 'input.txt');
 raw_farm = importdata(inputPath)
 
 farm = cell2mat(cellfun(@(row) double(row), raw_farm, 'UniformOutput', false));

@@ -1,6 +1,6 @@
 import * as fs from "fs";
 
-fs.promises.readFile("./src/day1/input.txt", "utf-8").then((text) => {
+fs.promises.readFile("./src/2024/day1/input.txt", "utf-8").then((text) => {
   const leftList: number[] = [];
   const rightListNumbers: { [index: number]: number } = {};
 

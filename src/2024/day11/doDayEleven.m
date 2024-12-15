@@ -1,4 +1,4 @@
-inputPath = fullfile('src', 'day11', 'input.txt');
+inputPath = fullfile('src', '2024', 'day11', 'input.txt');
 imported_stones = importdata(inputPath)
 
 [counts, unique_stones] = hist(imported_stones,unique(imported_stones));
