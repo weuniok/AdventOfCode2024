@@ -108,4 +108,3 @@ end
 
 indices = (1:numel(disk)) - 1;
 checksum_p2 = sum(indices' .* new_disk, 'all')
-
