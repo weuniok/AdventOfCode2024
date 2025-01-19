@@ -1,3 +1,6 @@
+from copy import deepcopy
+
+
 class WarehouseSimulator:
     def __init__(self, map_input, move_input):
         self.original_map = [list(row) for row in map_input]
@@ -61,6 +64,7 @@ class WarehouseSimulator:
             if print_map:
                 print("Move:", move)
                 self.print_map()
+                # self.save_map()
 
         return self.calculate_gps_sum()
     
@@ -68,6 +72,12 @@ class WarehouseSimulator:
         for row in self.map:
             print("".join(row))
         print("")    
+        
+    def save_map(self):
+        with open('output_mine.txt', 'a') as file:
+            for row in self.map:
+                file.write("".join(row) + '\n')
+            file.write('\n')
 
     def can_half_box_be_pushed(self, row, col, direction):
         """
@@ -82,10 +92,14 @@ class WarehouseSimulator:
             
         # If next space is empty, we can push
         if self.map[next_row][next_col] == '.':
+            current_tile = deepcopy(self.map[row][col])
+
             def push_callback():
+                if (current_tile != self.map[row][col] or self.map[next_row][next_col] != '.'): # This is avoiding double activation of same callback
+                    return
+                
                 self.map[next_row][next_col] = self.map[row][col]
                 self.map[row][col] = '.'
-                print()
             return True, push_callback
             
         # If next space is a box part, verify it's a complete box and try to push it
@@ -109,13 +123,18 @@ class WarehouseSimulator:
                 # Create callback that first pushes the next box, then this one
                 def combined_callback():
                     if self.map[next_row][next_col] == self.map[row][col]:
-                        if self.map[next_row][next_col] == '[':
+                        if self.map[next_row][next_col] == '[': # wasn't already pushed
                             left_callback()
-                        else:
+                        elif self.map[next_row][box_start_col + 1] == ']': # wasn't already pushed
                             right_callback()
-                    else:           
-                        left_callback()
-                        right_callback()
+                    else:
+                        if self.map[next_row][box_start_col] == '[': # wasn't already pushed
+                            left_callback()           
+                        if self.map[next_row][box_start_col + 1] == ']': # wasn't already pushed
+                            right_callback()     
+                        
+                    if self.map[next_row][next_col] != '.': # was already pushed
+                        return 
                     self.map[next_row][next_col] = self.map[row][col]  # Then push current box
                     self.map[row][col] = '.'
                 return True, combined_callback
@@ -139,5 +158,6 @@ if __name__ == "__main__":
         move_input = content[1].strip()
 
     simulator = WarehouseSimulator(map_input, move_input)
-    gps_sum = simulator.simulate(True)
+    gps_sum = simulator.simulate(False)
+    simulator.print_map()
     print("GPS Sum:", gps_sum)
