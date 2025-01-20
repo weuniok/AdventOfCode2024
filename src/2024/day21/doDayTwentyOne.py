@@ -63,44 +63,50 @@ for origin_arrow, origin_position in dirpad.items():
                 ('>' if origin_col < target_col else '<') * col_diff
                 ]
 
-def keypress(press, new_sequence):
-    if press == len(sequence):
-        sequences.append(new_sequence)
+# Cache for memoization
+known_sequences = {}
+def get_min_sequence_length(sequence: str, robot_level: int, max_level: int) -> int:
+    # Check cache
+    cache_key = (sequence, robot_level)
+    if cache_key in known_sequences:
+        return known_sequences[cache_key]
+    
+    # Base case: if we've reached the final robot level
+    if robot_level == max_level:
+        result = len(sequence)
     else:
-        presses = keypad_dirs[
-          ('A' if press == 0 else sequence[press - 1], 
-           sequence[press])
-          ]
-        if isinstance(presses, list):
-            keypress(press + 1, new_sequence + presses[0] + presses[1] + 'A')
-            keypress(press + 1, new_sequence + presses[1] + presses[0] + 'A')
-        else:
-            keypress(press + 1, new_sequence + presses + 'A')
-
-
+        total_length = 0
+        # Process each character in the sequence
+        for i in range(len(sequence)):
+            # Get moves needed from previous position to current
+            current_position = 'A' if i == 0 else sequence[i - 1]
+            next_position = sequence[i]
+            moves = keypad_dirs[(current_position, next_position)]
+            
+            if isinstance(moves, list):
+                # Try both path options and take the minimum
+                path1 = moves[0] + moves[1] + 'A'
+                path2 = moves[1] + moves[0] + 'A'
+                total_length += min(
+                    get_min_sequence_length(path1, robot_level + 1, max_level),
+                    get_min_sequence_length(path2, robot_level + 1, max_level)
+                )
+            else:
+                # Single path case
+                total_length += get_min_sequence_length(moves + 'A', robot_level + 1, max_level)
+        
+        result = total_length
+    
+    # Cache and return result
+    known_sequences[cache_key] = result
+    return result
 
 with open('src/2024/day21/input.txt', 'r') as file:
     codes = file.read().split('\n')
-      
+
 total = 0
 for door_code in codes:
-    sequences = []
-    sequence = door_code
-    keypress(0, '')
-    
-    # robot 2
-    possible_variants = sequences
-    sequences = []  
-    for variant in possible_variants:
-        sequence = variant
-        keypress(0, '')
-        
-    # robot 3    
-    possible_variants = sequences
-    sequences = []  
-    for robot_3_code in possible_variants:
-        sequence = robot_3_code
-        keypress(0, '')
-        
-    total += min([len(sequence) for sequence in sequences]) * int(door_code[:-1])
+    min_length = get_min_sequence_length(door_code, level=0, max_level=26)
+    total += min_length * int(door_code[:-1])
+
 print(total)
