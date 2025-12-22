@@ -8,6 +8,7 @@ import {
   countActiveSplittersBFS,
   Splitter,
   splitterToKey,
+  doPartTwo,
 } from "./beamLogic";
 
 describe("Advent of Code 2025 Day 7", () => {
@@ -203,6 +204,32 @@ describe("Advent of Code 2025 Day 7", () => {
       const result = doPartOne(input);
       // Starting from first splitter [0,0], should only reach connected ones
       expect(result).toBeGreaterThan(0);
+    });
+  });
+
+  describe("Part 2", () => {
+    it("should count active splitters for the example input", () => {
+      const input = [
+        ".......S.......",
+        "...............",
+        ".......^.......",
+        "...............",
+        "......^.^......",
+        "...............",
+        ".....^.^.^.....",
+        "...............",
+        "....^.^...^....",
+        "...............",
+        "...^.^...^.^...",
+        "...............",
+        "..^...^.....^..",
+        "...............",
+        ".^.^.^.^.^...^.",
+        "...............",
+      ];
+
+      const result = doPartTwo(input);
+      expect(result).toBe(40);
     });
   });
 });

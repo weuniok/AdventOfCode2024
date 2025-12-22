@@ -27,6 +27,19 @@ export function doPartOne(map: string[]) {
   return countActiveSplittersBFS(firstSplitter, adjacencyMatrix);
 }
 
+export function doPartTwo(map: string[]) {
+  const splitters = findAllSplitters(map);
+
+  const firstSplitter = splitters[0];
+  if (firstSplitter === undefined) {
+    throw new Error("No splitters found in the map");
+  }
+
+  const adjacencyMatrix = constructAdjacencyMatrix(splitters, map);
+
+  return countAllSplitterPathsDFS(firstSplitter, adjacencyMatrix);
+}
+
 export const findAllSplitters = (map: string[]): Splitter[] => {
   const splitters: Splitter[] = [];
   for (let row = 0; row < map.length; row++) {
@@ -121,4 +134,31 @@ export function countActiveSplittersBFS(
   }
 
   return checkedSplitters.size;
+}
+
+export function countAllSplitterPathsDFS(
+  firstSplitter: Splitter,
+  adjacencyMatrix: Map<string, Splitter[]>
+) {
+  const pathsFromSplitter = new Map<string, number>();
+
+  const countPaths = (splitter: Splitter) => {
+    const currentKey = splitterToKey(splitter);
+    if (pathsFromSplitter.has(currentKey)) {
+      return pathsFromSplitter.get(currentKey)!;
+    }
+
+    const neighbors = adjacencyMatrix.get(currentKey) || [];
+    // Splitter wit no neighbours has 2 finishing beams
+    // Splitter with one neighbour has one finishing beam and one going to a neighbour
+    // There are no splitters with more than 2 neighbours
+    let totalPaths = 2 - neighbors.length;
+    for (const neighbor of neighbors) {
+      totalPaths += countPaths(neighbor);
+    }
+    pathsFromSplitter.set(currentKey, totalPaths);
+    return totalPaths;
+  };
+
+  return countPaths(firstSplitter);
 }
