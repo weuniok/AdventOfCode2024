@@ -1,6 +1,6 @@
 <!-- AOC TILES BEGIN -->
 <h1 align="center">
-  2025 - 14 ⭐ - 
+  2025 - 16 ⭐ - 
 </h1>
 <a href="src/2025/day1/part1.ts">
   <img src=".aoc_tiles/tiles/2025/01.png" width="161px">
@@ -22,6 +22,9 @@
 </a>
 <a href="src/2025/day7/beamLogic.ts">
   <img src=".aoc_tiles/tiles/2025/07.png" width="161px">
+</a>
+<a href="src/2025/day8/circuitLogic.ts">
+  <img src=".aoc_tiles/tiles/2025/08.png" width="161px">
 </a>
 <h1 align="center">
   2024 - 50 ⭐ - 
